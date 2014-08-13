@@ -12,7 +12,6 @@ CREATE OR REPLACE VIEW gphero_running_queries AS
   WHERE
     current_query <> '<insufficient privilege>'
     AND current_query not like '<IDLE>'
-    AND procpid <> pg_backend_pid()
   ORDER BY
     query_start DESC;
 
