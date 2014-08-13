@@ -21,6 +21,7 @@ CREATE OR REPLACE VIEW gphero_long_running_queries AS
 CREATE OR REPLACE VIEW gphero_index_usage AS
   SELECT
     relname AS table,
+    schemaname AS schema,
     relid AS relation_id,
     CASE idx_scan
       WHEN 0 THEN 'Insufficient data'
@@ -39,6 +40,7 @@ CREATE OR REPLACE VIEW gphero_missing_indexes AS
 CREATE OR REPLACE VIEW gphero_unused_indexes AS
   SELECT
     relname AS table,
+    schemaname AS schema,
     indexrelname AS index,
     pg_size_pretty(pg_relation_size(i.indexrelid)) AS index_size,
     idx_scan as index_scans
@@ -57,6 +59,7 @@ CREATE OR REPLACE VIEW gphero_unused_indexes AS
 CREATE OR REPLACE VIEW gphero_relation_sizes AS
   SELECT
     c.relname AS name,
+    c.schemaname AS schema,
     CASE WHEN c.relkind = 'r' THEN 'table' ELSE 'index' END AS type,
     pg_size_pretty(pg_relation_size(c.oid)) AS size
   FROM
