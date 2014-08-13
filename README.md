@@ -8,10 +8,6 @@ Database insights made easy
 
 Supports GreenPlum 4.2+
 
-For Ruby, check out the [pghero gem](https://github.com/britt/gphero)
-
-Initial queries by [Heroku](https://blog.heroku.com/archives/2013/5/10/more_insight_into_your_database_with_pgextras) :clap:
-
 ## Features
 
 #### Queries
@@ -19,25 +15,25 @@ Initial queries by [Heroku](https://blog.heroku.com/archives/2013/5/10/more_insi
 View all running queries with:
 
 ```sql
-SELECT * FROM pghero_running_queries;
+SELECT * FROM gphero_running_queries;
 ```
 
 Queries running for longer than five minutes
 
 ```sql
-SELECT * FROM pghero_long_running_queries;
+SELECT * FROM gphero_long_running_queries;
 ```
 
 Queries can be killed by `pid` with:
 
 ```sql
-SELECT pghero_kill(123);
+SELECT gphero_kill(123);
 ```
 
 Kill all running queries with:
 
 ```sql
-SELECT pghero_kill_all();
+SELECT gphero_kill_all();
 ```
 
 #### Index Usage
@@ -45,19 +41,19 @@ SELECT pghero_kill_all();
 All usage
 
 ```sql
-SELECT * FROM pghero_index_usage;
+SELECT * FROM gphero_index_usage;
 ```
 
 Missing indexes
 
 ```sql
-SELECT * FROM pghero_missing_indexes;
+SELECT * FROM gphero_missing_indexes;
 ```
 
 Unused Indexes
 
 ```sql
-SELECT * FROM pghero_unused_indexes;
+SELECT * FROM gphero_unused_indexes;
 ```
 
 #### Space
@@ -65,19 +61,19 @@ SELECT * FROM pghero_unused_indexes;
 Largest tables and indexes
 
 ```sql
-SELECT * FROM pghero_relation_sizes;
+SELECT * FROM gphero_relation_sizes;
 ```
 
 #### Cache Hit Ratio
 
 ```sql
-SELECT pghero_index_hit_rate();
+SELECT gphero_index_hit_rate();
 ```
 
 and
 
 ```sql
-SELECT pghero_table_hit_rate();
+SELECT gphero_table_hit_rate();
 ```
 
 Both should be above 99%.
@@ -87,15 +83,15 @@ Both should be above 99%.
 Run this command from your shell:
 
 ```sh
-curl https://raw.githubusercontent.com/ankane/pghero.sql/master/install.sql | psql db_name
+curl https://raw.githubusercontent.com/britt/gphero.sql/master/install.sql | psql db_name
 ```
 
-or [copy its contents](https://raw.githubusercontent.com/ankane/pghero.sql/master/install.sql) into a SQL console.
+or [copy its contents](https://raw.githubusercontent.com/britt/gphero.sql/master/install.sql) into a SQL console.
 
 ## Uninstall
 
 ```sh
-curl https://raw.githubusercontent.com/ankane/pghero.sql/master/uninstall.sql | psql db_name
+curl https://raw.githubusercontent.com/britt/gphero.sql/master/uninstall.sql | psql db_name
 ```
 
 ## Contributing
