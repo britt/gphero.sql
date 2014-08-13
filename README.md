@@ -2,7 +2,7 @@
 
 Database insights made easy
 
-*A Greenplum version of [Ankane's awesome PgHero.sql](https://github.com/ankane/pghero)*
+*A Greenplum version of [Ankane's awesome PgHero.sql](https://github.com/ankane/pghero). This is a straight port but I will be adding more Greenplum specific features in the future.*
 
 ![Screenshot](https://pghero.herokuapp.com/assets/console-75e99c4a6e049943da6eba66b3d758e7.png)
 
