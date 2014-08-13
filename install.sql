@@ -69,7 +69,7 @@ CREATE OR REPLACE VIEW gphero_relation_sizes AS
     AND n.nspname !~ '^pg_toast'
     AND c.relkind IN ('r', 'i')
   ORDER BY
-    pg_table_size(c.oid) DESC,
+    pg_relation_size(c.oid) DESC,
     name ASC;
 
 -- functions
