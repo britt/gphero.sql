@@ -98,7 +98,7 @@ curl https://raw.githubusercontent.com/britt/gphero.sql/master/uninstall.sql | p
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/ankane/pghero.sql/issues)
-- Fix bugs and [submit pull requests](https://github.com/ankane/pghero.sql/pulls)
+- [Report bugs](https://github.com/britt/gphero.sql/issues)
+- Fix bugs and [submit pull requests](https://github.com/britt/gphero.sql/pulls)
 - Write, clarify, or fix documentation
 - Suggest or add new features
