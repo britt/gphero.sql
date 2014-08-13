@@ -1,6 +1,6 @@
 -- views
 
-CREATE OR REPLACE VIEW pghero_running_queries AS
+CREATE OR REPLACE VIEW gphero_running_queries AS
   SELECT
     procpid,
     application_name AS source,
@@ -16,10 +16,10 @@ CREATE OR REPLACE VIEW pghero_running_queries AS
   ORDER BY
     query_start DESC;
 
-CREATE OR REPLACE VIEW pghero_long_running_queries AS
-  SELECT * FROM pghero_running_queries WHERE duration > interval '5 minutes';
+CREATE OR REPLACE VIEW gphero_long_running_queries AS
+  SELECT * FROM gphero_running_queries WHERE duration > interval '5 minutes';
 
-CREATE OR REPLACE VIEW pghero_index_usage AS
+CREATE OR REPLACE VIEW gphero_index_usage AS
   SELECT
     relname AS table,
     CASE idx_scan
@@ -33,10 +33,10 @@ CREATE OR REPLACE VIEW pghero_index_usage AS
     n_live_tup DESC,
     relname ASC;
 
-CREATE OR REPLACE VIEW pghero_missing_indexes AS
-  SELECT * FROM pghero_index_usage WHERE percent_of_times_index_used::integer < 95 AND rows_in_table >= 10000;
+CREATE OR REPLACE VIEW gphero_missing_indexes AS
+  SELECT * FROM gphero_index_usage WHERE percent_of_times_index_used::integer < 95 AND rows_in_table >= 10000;
 
-CREATE OR REPLACE VIEW pghero_unused_indexes AS
+CREATE OR REPLACE VIEW gphero_unused_indexes AS
   SELECT
     relname AS table,
     indexrelname AS index,
@@ -54,7 +54,7 @@ CREATE OR REPLACE VIEW pghero_unused_indexes AS
     pg_relation_size(i.indexrelid) DESC,
     relname ASC;
 
-CREATE OR REPLACE VIEW pghero_relation_sizes AS
+CREATE OR REPLACE VIEW gphero_relation_sizes AS
   SELECT
     c.relname AS name,
     CASE WHEN c.relkind = 'r' THEN 'table' ELSE 'index' END AS type,
@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW pghero_relation_sizes AS
 
 -- functions
 
-CREATE OR REPLACE FUNCTION pghero_index_hit_rate()
+CREATE OR REPLACE FUNCTION gphero_index_hit_rate()
   RETURNS numeric AS
 $$
   SELECT
@@ -83,7 +83,7 @@ $$
 $$
   LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION pghero_table_hit_rate()
+CREATE OR REPLACE FUNCTION gphero_table_hit_rate()
   RETURNS numeric AS
 $$
   SELECT
@@ -93,14 +93,14 @@ $$
 $$
   LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION pghero_kill(integer)
+CREATE OR REPLACE FUNCTION gphero_kill(integer)
   RETURNS boolean AS
 $$
   SELECT pg_cancel_backend($1);
 $$
   LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION pghero_kill_all()
+CREATE OR REPLACE FUNCTION gphero_kill_all()
   RETURNS boolean AS
 $$
   SELECT
