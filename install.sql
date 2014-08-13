@@ -2,18 +2,17 @@
 
 CREATE OR REPLACE VIEW pghero_running_queries AS
   SELECT
-    pid,
-    state,
+    procpid,
     application_name AS source,
     age(now(), xact_start) AS duration,
     waiting,
-    query
+    current_query
   FROM
     pg_stat_activity
   WHERE
-    query <> '<insufficient privilege>'
-    AND state <> 'idle'
-    AND pid <> pg_backend_pid()
+    current_query <> '<insufficient privilege>'
+    AND current_query not like '<IDLE>'
+    AND procpid <> pg_backend_pid()
   ORDER BY
     query_start DESC;
 
@@ -35,7 +34,7 @@ CREATE OR REPLACE VIEW pghero_index_usage AS
     relname ASC;
 
 CREATE OR REPLACE VIEW pghero_missing_indexes AS
-  SELECT * FROM pghero_index_usage WHERE percent_of_times_index_used <> 'Insufficient data' AND percent_of_times_index_used::integer < 95 AND rows_in_table >= 10000;
+  SELECT * FROM pghero_index_usage WHERE percent_of_times_index_used::integer < 95 AND rows_in_table >= 10000;
 
 CREATE OR REPLACE VIEW pghero_unused_indexes AS
   SELECT
@@ -105,11 +104,11 @@ CREATE OR REPLACE FUNCTION pghero_kill_all()
   RETURNS boolean AS
 $$
   SELECT
-    pg_terminate_backend(pid)
+    pg_terminate_backend(procpid)
   FROM
     pg_stat_activity
   WHERE
-    pid <> pg_backend_pid()
-    AND query <> '<insufficient privilege>';
+    procpid <> pg_backend_pid()
+    AND current_query <> '<insufficient privilege>';
 $$
   LANGUAGE SQL;
