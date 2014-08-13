@@ -1,12 +1,14 @@
-# PgHero.sql
+# GpHero.sql
 
 Database insights made easy
 
+*A Greenplum version of [Ankane's awesome PgHero.sql](https://github.com/ankane/pghero)*
+
 ![Screenshot](https://pghero.herokuapp.com/assets/console-75e99c4a6e049943da6eba66b3d758e7.png)
 
-Supports PostgreSQL 9.2+
+Supports GreenPlum 4.2+
 
-For Ruby, check out the [pghero gem](https://github.com/ankane/pghero)
+For Ruby, check out the [pghero gem](https://github.com/britt/gphero)
 
 Initial queries by [Heroku](https://blog.heroku.com/archives/2013/5/10/more_insight_into_your_database_with_pgextras) :clap:
 
