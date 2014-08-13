@@ -22,19 +22,20 @@ CREATE OR REPLACE VIEW gphero_long_running_queries AS
 CREATE OR REPLACE VIEW gphero_index_usage AS
   SELECT
     relname AS table,
+    relid AS relation_id,
     CASE idx_scan
       WHEN 0 THEN 'Insufficient data'
       ELSE (100 * idx_scan / (seq_scan + idx_scan))::text
     END percent_of_times_index_used,
-    n_live_tup rows_in_table
+    pg_size_pretty(pg_relation_size(relid)) size_of_table
   FROM
     pg_stat_user_tables
   ORDER BY
-    n_live_tup DESC,
+    pg_relation_size(relid) DESC,
     relname ASC;
 
 CREATE OR REPLACE VIEW gphero_missing_indexes AS
-  SELECT * FROM gphero_index_usage WHERE percent_of_times_index_used::integer < 95 AND rows_in_table >= 10000;
+  SELECT * FROM gphero_index_usage WHERE percent_of_times_index_used::integer < 95 AND pg_relation_size(gphero_index_usage.relation_id) >= 100000000;
 
 CREATE OR REPLACE VIEW gphero_unused_indexes AS
   SELECT
@@ -58,7 +59,7 @@ CREATE OR REPLACE VIEW gphero_relation_sizes AS
   SELECT
     c.relname AS name,
     CASE WHEN c.relkind = 'r' THEN 'table' ELSE 'index' END AS type,
-    pg_size_pretty(pg_table_size(c.oid)) AS size
+    pg_size_pretty(pg_relation_size(c.oid)) AS size
   FROM
     pg_class c
   LEFT JOIN
