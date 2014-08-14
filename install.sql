@@ -59,7 +59,7 @@ CREATE OR REPLACE VIEW gphero_unused_indexes AS
 CREATE OR REPLACE VIEW gphero_relation_sizes AS
   SELECT
     c.relname AS name,
-    c.schemaname AS schema,
+    n.nspname AS schema,
     CASE WHEN c.relkind = 'r' THEN 'table' ELSE 'index' END AS type,
     pg_size_pretty(pg_relation_size(c.oid)) AS size
   FROM
