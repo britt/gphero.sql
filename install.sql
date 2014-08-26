@@ -1,9 +1,9 @@
 -- views
-
 CREATE OR REPLACE VIEW gphero_running_queries AS
   SELECT
     procpid,
     application_name AS source,
+    usename AS user,
     age(now(), xact_start) AS duration,
     waiting,
     current_query
